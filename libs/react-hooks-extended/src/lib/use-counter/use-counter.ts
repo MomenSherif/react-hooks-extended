@@ -19,7 +19,15 @@ export interface UseCounterOptions {
   step?: number;
 }
 
-// export interface UseCounter {}
+export interface UseCounter {
+  count: number;
+  increment(): void;
+  decrement(): void;
+  incrementBy(value: number): void;
+  decrementBy(value: number): void;
+  set(value: number): void;
+  reset(): void;
+}
 
 /**
  * @param initialCount - initial counter
@@ -29,7 +37,7 @@ export interface UseCounterOptions {
 export function useCounter(
   initialCount: InitialCount = 0,
   options: UseCounterOptions = {}
-) {
+): UseCounter {
   const {
     step = 1,
     min = Number.MIN_SAFE_INTEGER,
@@ -73,7 +81,7 @@ export function useCounter(
     decrementBy,
     set,
     reset,
-  } as const;
+  };
 }
 
 export default useCounter;
