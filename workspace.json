@@ -8,9 +8,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/example",
             "index": "apps/example/src/index.html",
@@ -67,20 +65,14 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": [
-              "apps/example/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["apps/example/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/example"
-          ],
+          "outputs": ["coverage/apps/example"],
           "options": {
             "jestConfig": "apps/example/jest.config.js",
             "passWithNoTests": true
@@ -108,13 +100,9 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": [
-              "apps/example-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/example-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -126,34 +114,24 @@
       "targets": {
         "build": {
           "executor": "@nrwl/workspace:tsc",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/libs/react-hooks-extended",
             "main": "libs/react-hooks-extended/src/index.ts",
             "tsConfig": "libs/react-hooks-extended/tsconfig.lib.json",
-            "assets": [
-              "libs/react-hooks-extended/*.md"
-            ]
+            "assets": ["libs/react-hooks-extended/*.md"]
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": [
-              "libs/react-hooks-extended/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/react-hooks-extended/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/react-hooks-extended"
-          ],
+          "outputs": ["coverage/libs/react-hooks-extended"],
           "options": {
             "jestConfig": "libs/react-hooks-extended/jest.config.js",
             "passWithNoTests": true

@@ -2,7 +2,7 @@
   "root": true,
   "ignorePatterns": ["**/*"],
   "plugins": ["@nrwl/nx"],
-  "extends": ["plugin:react-hooks/recommended"],
+  "extends": ["plugin:react-hooks/recommended", "plugin:react/recommended"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -20,8 +20,10 @@
             ]
           }
         ],
+        "react/react-in-jsx-scope": "off",
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "error"
+        "react-hooks/exhaustive-deps": "error",
+        "react/jsx-boolean-value": "error"
       }
     },
     {
