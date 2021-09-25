@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { useCounter, useStepper } from 'react-hooks-extended';
+import { useCounter, useStepper, useTimeout } from 'react-hooks-extended';
 
 const Heading = styled.h1({ fontSize: 50, textAlign: 'center' });
 const Button = styled.button({
@@ -109,6 +109,10 @@ export function App() {
     goto,
   } = useStepper(todos);
 
+  const { restart } = useTimeout(() => {
+    goto(Math.floor(Math.random() * todos.length));
+  }, 1000);
+
   return (
     <div
       css={{
@@ -120,6 +124,10 @@ export function App() {
       }}
     >
       <Heading>Hello, react-hooks-extended!</Heading>
+      <Button onClick={restart} css={{ marginBottom: 10, padding: 10 }}>
+        Random | timeout
+      </Button>
+
       <div css={{ display: 'flex', alignItems: 'center' }}>
         <Button css={{ marginRight: 10 }} disabled={!canPrev} onClick={prev}>
           Prev
