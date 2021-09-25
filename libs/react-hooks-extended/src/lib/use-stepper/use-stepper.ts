@@ -5,13 +5,37 @@ export interface UseStepperOptions {
 }
 
 export interface UseStepper<T> {
+  /**
+   * Current active step
+   */
   currentStep: T;
+  /**
+   * Current active index
+   */
   currentIndex: number;
+  /**
+   * Go to next step
+   */
   next(): void;
+  /**
+   * Go to prev step
+   */
   prev(): void;
+  /**
+   * Go to certain step
+   */
   goto(step: number): void;
+  /**
+   * Reset to initial step
+   */
   reset(): void;
+  /**
+   * Has next steps
+   */
   canNext: boolean;
+  /**
+   * Has previous steps
+   */
   canPrev: boolean;
 }
 
