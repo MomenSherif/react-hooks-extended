@@ -68,7 +68,11 @@ export function useCounter(
     max = Number.MAX_SAFE_INTEGER,
   } = options;
 
-  const [count, setCount] = useState(initialCount);
+  const [count, setCount] = useState(() => {
+    const initialValue =
+      typeof initialCount === 'function' ? initialCount() : initialCount;
+    return clamp(initialValue, min, max);
+  });
 
   const increment = useCallback(
     () => setCount(c => Math.min(c + step, max)),
