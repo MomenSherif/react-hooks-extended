@@ -20,12 +20,35 @@ export interface UseCounterOptions {
 }
 
 export interface UseCounter {
+  /**
+   * Current count
+   */
   count: number;
+  /**
+   * Increment by one step
+   * @default step 1
+   */
   increment(): void;
+  /**
+   * Decrement by one step
+   * @default step 1
+   */
   decrement(): void;
+  /**
+   * Increment with specific number
+   */
   incrementBy(value: number): void;
+  /**
+   * Decrement with specific number
+   */
   decrementBy(value: number): void;
+  /**
+   * Set counter to certain value
+   */
   set(value: number): void;
+  /**
+   * Reset counter to initial value
+   */
   reset(): void;
 }
 
