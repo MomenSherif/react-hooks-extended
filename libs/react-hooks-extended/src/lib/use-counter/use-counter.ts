@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import clamp from '../../utils/clamp';
 
 export type InitialCount = number | (() => number);
 export interface UseCounterOptions {
@@ -90,7 +91,7 @@ export function useCounter(
   );
 
   const set = useCallback(
-    (value: number) => setCount(value > max ? max : value < min ? min : value),
+    (value: number) => setCount(clamp(value, min, max)),
     [max, min]
   );
 
