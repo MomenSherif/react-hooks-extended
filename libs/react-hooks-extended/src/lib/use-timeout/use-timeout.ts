@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import useRetry from '../use-retry/use-retry';
 
 type Callback = () => void;
