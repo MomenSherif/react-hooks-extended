@@ -21,6 +21,7 @@ export function useTimeout(callback: Callback, delay: Delay = 0): UseTimeout {
   const [retry, doRetry] = useRetry();
 
   const callbackRef = useRef(callback);
+  callbackRef.current = callback;
 
   useEffect(() => {
     const timeLeft =
