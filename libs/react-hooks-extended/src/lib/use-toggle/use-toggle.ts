@@ -20,7 +20,7 @@ function useToggle(
   toggleFunctionRef.current = toggleFunction;
 
   const toggle = useCallback(() => {
-    setState((s: any) => s);
+    setState(toggleFunctionRef.current);
   }, []);
 
   return [state, toggle, setState];
