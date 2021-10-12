@@ -9,6 +9,7 @@ import {
   useToggle,
   useDidMount,
   useDidUpdate,
+  usePersistedState,
 } from 'react-hooks-extended';
 
 const Heading = styled.h1({ fontSize: 50, textAlign: 'center' });
@@ -38,6 +39,7 @@ const Button = styled.button({
 });
 
 export function App() {
+  const [name, setName] = usePersistedState('name', "Mo'");
   const [state, toggle, setState] = useToggle<'on' | 'off'>('off', s =>
     s === 'on' ? 'off' : 'on'
   );
@@ -62,7 +64,10 @@ export function App() {
     >
       <Heading>Hello, react-hooks-extended!</Heading>
       <Button onClick={toggle}>Toggle </Button>
-      <p>{state}</p>
+      <input type="text" value={name} onChange={e => setName(e.target.value)} />
+      <p>
+        {state} | {name}
+      </p>
       <div css={{ display: 'flex' }}>
         <Button css={{ marginRight: 10 }} onClick={() => setState('on')}>
           Force on
