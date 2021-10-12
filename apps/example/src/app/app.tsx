@@ -8,6 +8,7 @@ import {
   useInterval,
   useToggle,
   useDidMount,
+  useDidUpdate,
 } from 'react-hooks-extended';
 
 const Heading = styled.h1({ fontSize: 50, textAlign: 'center' });
@@ -44,6 +45,10 @@ export function App() {
   useDidMount(() => {
     console.log('Mounted');
   });
+
+  useDidUpdate(() => {
+    console.log('Updated', state);
+  }, [state]);
 
   return (
     <div
