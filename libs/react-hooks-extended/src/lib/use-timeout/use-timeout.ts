@@ -1,29 +1,37 @@
 import { useEffect, useRef } from 'react';
 import useRetry from '../use-retry/use-retry';
 
-type Callback = () => void;
-type Delay = number | Date;
-
-export interface UseTimeout {
+export interface UseTimeoutOptions {
   /**
-   * Restart the timer
+   * Enable or disable the timeout
+   * @default true
    */
+  enabled?: boolean;
+}
+export interface UseTimeout {
+  /** Restart the timer */
   restart(): void;
 }
-
 /**
  *
  * @param callback - A function to be executed after the timer expires
  * @param delay - The time in 'milliseconds' or 'Date' in the future that the timer should wait
  * @default delay 0
  */
-export function useTimeout(callback: Callback, delay: Delay = 0): UseTimeout {
+export function useTimeout(
+  callback: VoidFunction,
+  delay: number | Date = 0,
+  options: UseTimeoutOptions = {}
+): UseTimeout {
+  const { enabled = true } = options;
   const [retry, doRetry] = useRetry();
 
   const callbackRef = useRef(callback);
   callbackRef.current = callback;
 
   useEffect(() => {
+    if (!enabled) return;
+
     const timeLeft =
       typeof delay === 'number'
         ? delay
@@ -36,7 +44,7 @@ export function useTimeout(callback: Callback, delay: Delay = 0): UseTimeout {
     return () => {
       clearTimeout(timerId);
     };
-  }, [delay, retry]);
+  }, [delay, enabled, retry]);
 
   return {
     restart: doRetry,
