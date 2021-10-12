@@ -1,3 +1,4 @@
+export * from './lib/use-did-mount/use-did-mount';
 export * from './lib/use-interval/use-interval';
 export * from './lib/use-toggle/use-toggle';
 export * from './lib/use-retry/use-retry';

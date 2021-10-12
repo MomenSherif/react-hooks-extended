@@ -5,7 +5,9 @@ import {
   useCounter,
   useStepper,
   useTimeout,
+  useInterval,
   useToggle,
+  useDidMount,
 } from 'react-hooks-extended';
 
 const Heading = styled.h1({ fontSize: 50, textAlign: 'center' });
@@ -38,6 +40,11 @@ export function App() {
   const [state, toggle, setState] = useToggle<'on' | 'off'>('off', s =>
     s === 'on' ? 'off' : 'on'
   );
+
+  useDidMount(() => {
+    console.log('Mounted');
+  });
+
   return (
     <div
       css={{
