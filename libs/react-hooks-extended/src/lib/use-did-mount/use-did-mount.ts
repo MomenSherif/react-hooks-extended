@@ -4,7 +4,7 @@ import { useEffect, useRef, EffectCallback } from 'react';
  * Calls a callback on mount
  * @param callback - Imperative function that can return a cleanup function
  */
-export function useDidMount(callback: EffectCallback) {
+export function useDidMount(callback: EffectCallback): void {
   const isMountedRef = useRef(false);
 
   const callbackRef = useRef(callback);
