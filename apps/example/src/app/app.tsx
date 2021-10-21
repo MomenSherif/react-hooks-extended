@@ -11,6 +11,7 @@ import {
   useDidUpdate,
   usePersistedState,
   useMapState,
+  useArrayState,
 } from 'react-hooks-extended';
 
 const Heading = styled.h1({ fontSize: 50, textAlign: 'center' });
@@ -40,17 +41,18 @@ const Button = styled.button({
   },
 });
 
+interface Todo {
+  id: number;
+  text: string;
+}
+
 export function App() {
-  const [state, { set, remove, has, setMultiple, removeMultiple, removeAll }] =
-    useMapState<{
-      loading: boolean;
-      data: string | null;
-      error: string | null;
-    }>({
-      loading: true,
-      data: null,
-      error: null,
-    });
+  const [state, { push, unshift, pop, shift, remove, removeAll }] =
+    useArrayState<Todo>([]);
+
+  useDidMount(() => {
+    push({ id: 1, text: 'one' }, { id: 1, text: 'two' });
+  });
 
   return (
     <div
@@ -63,26 +65,25 @@ export function App() {
       }}
     >
       <Heading>Hello, react-hooks-extended!</Heading>
-      <Button onClick={() => set('loading', v => !v)}>Click</Button>
-      <Button onClick={() => remove('loading')}>Remove</Button>
       <Button
         onClick={() =>
-          setMultiple({
-            loading: false,
-            data: '🐱‍👤',
-          })
+          push({ id: Date.now(), text: `Todo ${state.length + 1}` })
         }
       >
-        Update Multiple
+        Add TODO
       </Button>
-      <Button onClick={() => removeMultiple('error', 'loading')}>
-        Remove Multiple
+      <Button
+        onClick={() =>
+          unshift({ id: Date.now(), text: `Todo ${state.length + 1}` })
+        }
+      >
+        Unshift TODO
       </Button>
-      <Button onClick={removeAll}>Remove All</Button>
-      <h2>{String(state.loading)}</h2>
-      <pre>
-        <code>{JSON.stringify(state, null, 2)}</code>
-      </pre>
+      <Button onClick={pop}>Pop</Button>
+      <Button onClick={shift}>Shift</Button>
+      <Button onClick={removeAll}>Remove all</Button>
+      <Button onClick={() => remove((todo, i) => i === 1)}>Remove 2</Button>
+      <pre>{JSON.stringify(state, null, 2)}</pre>
     </div>
   );
 }
