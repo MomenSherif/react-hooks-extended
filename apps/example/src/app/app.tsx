@@ -13,6 +13,7 @@ import {
   useMapState,
   useArrayState,
   useDebounceEffect,
+  useQuery,
 } from 'react-hooks-extended';
 
 const Heading = styled.h1({ fontSize: 50, textAlign: 'center' });
@@ -41,17 +42,31 @@ const Button = styled.button({
     cursor: 'not-allowed',
   },
 });
-
+interface Post {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+}
 export function App() {
-  const [state, setState] = useState('');
-
-  useDebounceEffect(
-    () => {
-      console.log('state', state);
-    },
-    [state],
-    { runOnMount: false, wait: 500 }
+  const { count: id, increment } = useCounter(1);
+  const { data, isLoading, isError, error, refetch } = useQuery<Post, Error>(
+    () =>
+      fetch(`https://jsonplaceholder.typicode.com/posts/${id}`).then(res => {
+        if (!res.ok) throw new Error('Something went wrong!');
+        return res.json();
+      }),
+    [id]
   );
+
+  if (isLoading) return <div>Loaaaaaaaaaaaading....</div>;
+  if (isError)
+    return (
+      <div>
+        {error?.message}
+        <Button onClick={refetch}>Retry</Button>
+      </div>
+    );
 
   return (
     <div
@@ -64,13 +79,8 @@ export function App() {
       }}
     >
       <Heading>Hello, react-hooks-extended!</Heading>
-
-      <input
-        type="text"
-        value={state}
-        onChange={e => setState(e.target.value)}
-        autoFocus
-      />
+      <Button onClick={increment}>Fetch next</Button>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 }
