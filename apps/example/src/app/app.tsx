@@ -10,6 +10,7 @@ import {
   useDidMount,
   useDidUpdate,
   usePersistedState,
+  useMapState,
 } from 'react-hooks-extended';
 
 const Heading = styled.h1({ fontSize: 50, textAlign: 'center' });
@@ -19,6 +20,7 @@ const Button = styled.button({
   backgroundColor: 'crimson',
   color: 'white',
   padding: '15px 20px',
+  marginBottom: 10,
   fontSize: 20,
   borderRadius: 10,
   cursor: 'pointer',
@@ -39,18 +41,16 @@ const Button = styled.button({
 });
 
 export function App() {
-  const [name, setName] = usePersistedState('name', "Mo'");
-  const [state, toggle, setState] = useToggle<'on' | 'off'>('off', s =>
-    s === 'on' ? 'off' : 'on'
-  );
-
-  useDidMount(() => {
-    console.log('Mounted');
-  });
-
-  useDidUpdate(() => {
-    console.log('Updated', state);
-  }, [state]);
+  const [state, { set, remove, has, setMultiple, removeMultiple, removeAll }] =
+    useMapState<{
+      loading: boolean;
+      data: string | null;
+      error: string | null;
+    }>({
+      loading: true,
+      data: null,
+      error: null,
+    });
 
   return (
     <div
@@ -63,17 +63,26 @@ export function App() {
       }}
     >
       <Heading>Hello, react-hooks-extended!</Heading>
-      <Button onClick={toggle}>Toggle </Button>
-      <input type="text" value={name} onChange={e => setName(e.target.value)} />
-      <p>
-        {state} | {name}
-      </p>
-      <div css={{ display: 'flex' }}>
-        <Button css={{ marginRight: 10 }} onClick={() => setState('on')}>
-          Force on
-        </Button>
-        <Button onClick={() => setState('off')}>Force off</Button>
-      </div>
+      <Button onClick={() => set('loading', v => !v)}>Click</Button>
+      <Button onClick={() => remove('loading')}>Remove</Button>
+      <Button
+        onClick={() =>
+          setMultiple({
+            loading: false,
+            data: '🐱‍👤',
+          })
+        }
+      >
+        Update Multiple
+      </Button>
+      <Button onClick={() => removeMultiple('error', 'loading')}>
+        Remove Multiple
+      </Button>
+      <Button onClick={removeAll}>Remove All</Button>
+      <h2>{String(state.loading)}</h2>
+      <pre>
+        <code>{JSON.stringify(state, null, 2)}</code>
+      </pre>
     </div>
   );
 }
