@@ -12,6 +12,7 @@ import {
   usePersistedState,
   useMapState,
   useArrayState,
+  useDebounceEffect,
 } from 'react-hooks-extended';
 
 const Heading = styled.h1({ fontSize: 50, textAlign: 'center' });
@@ -41,18 +42,16 @@ const Button = styled.button({
   },
 });
 
-interface Todo {
-  id: number;
-  text: string;
-}
-
 export function App() {
-  const [state, { push, unshift, pop, shift, remove, removeAll }] =
-    useArrayState<Todo>([]);
+  const [state, setState] = useState('');
 
-  useDidMount(() => {
-    push({ id: 1, text: 'one' }, { id: 1, text: 'two' });
-  });
+  useDebounceEffect(
+    () => {
+      console.log('state', state);
+    },
+    [state],
+    { runOnMount: false, wait: 500 }
+  );
 
   return (
     <div
@@ -65,25 +64,13 @@ export function App() {
       }}
     >
       <Heading>Hello, react-hooks-extended!</Heading>
-      <Button
-        onClick={() =>
-          push({ id: Date.now(), text: `Todo ${state.length + 1}` })
-        }
-      >
-        Add TODO
-      </Button>
-      <Button
-        onClick={() =>
-          unshift({ id: Date.now(), text: `Todo ${state.length + 1}` })
-        }
-      >
-        Unshift TODO
-      </Button>
-      <Button onClick={pop}>Pop</Button>
-      <Button onClick={shift}>Shift</Button>
-      <Button onClick={removeAll}>Remove all</Button>
-      <Button onClick={() => remove((todo, i) => i === 1)}>Remove 2</Button>
-      <pre>{JSON.stringify(state, null, 2)}</pre>
+
+      <input
+        type="text"
+        value={state}
+        onChange={e => setState(e.target.value)}
+        autoFocus
+      />
     </div>
   );
 }

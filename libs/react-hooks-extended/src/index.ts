@@ -1,3 +1,4 @@
+export * from './lib/use-debounce-effect/use-debounce-effect';
 export * from './lib/use-array-state/use-array-state';
 export * from './lib/use-map-state/use-map-state';
 export * from './lib/use-persisted-state/use-persisted-state';
