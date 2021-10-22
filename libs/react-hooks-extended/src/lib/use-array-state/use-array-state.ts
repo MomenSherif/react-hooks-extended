@@ -13,6 +13,15 @@ export interface UseArrayStateUpdaters<T> {
   shift(): void;
   /** Removes all elements that pass the test implemented by the predicate function */
   remove(predicate: (value: T, index: number, array: T[]) => boolean): void;
+  /**
+   * Update all elements that pass the test implemented by the predicate function.
+   * @param predicate - Should return true for elements that need to be updated
+   * @param updater - A function takes previous value & index for updated item and returns updated item
+   */
+  update(
+    predicate: (value: T, index: number, array: T[]) => boolean,
+    updater: (prevValue: T, index: number) => T
+  ): void;
   /** Removes all array elements */
   removeAll(): void;
 }
@@ -66,6 +75,15 @@ export function useArrayState<T>(
     });
   }, []);
 
+  const update: UseArrayStateUpdaters<T>['update'] = useCallback(
+    (predicate, updater) => {
+      setState(prevState =>
+        prevState.map((v, i, a) => (predicate(v, i, a) ? updater(v, i) : v))
+      );
+    },
+    []
+  );
+
   const removeAll: UseArrayStateUpdaters<T>['removeAll'] = useCallback(() => {
     setState(prevState => {
       if (!prevState.length) return prevState;
@@ -75,7 +93,7 @@ export function useArrayState<T>(
 
   return [
     state,
-    { set: setState, push, unshift, pop, shift, remove, removeAll },
+    { set: setState, push, unshift, pop, shift, remove, update, removeAll },
   ];
 }
 
