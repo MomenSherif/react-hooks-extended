@@ -1,3 +1,4 @@
+export * from './lib/use-mutation/use-mutation';
 export * from './lib/use-query/use-query';
 export * from './lib/use-debounce-effect/use-debounce-effect';
 export * from './lib/use-array-state/use-array-state';

@@ -14,6 +14,7 @@ import {
   useArrayState,
   useDebounceEffect,
   useQuery,
+  useMutation,
 } from 'react-hooks-extended';
 
 const Heading = styled.h1({ fontSize: 50, textAlign: 'center' });
@@ -48,25 +49,19 @@ interface Post {
   title: string;
   body: string;
 }
-export function App() {
-  const { count: id, increment } = useCounter(1);
-  const { data, isLoading, isError, error, refetch } = useQuery<Post, Error>(
-    () =>
-      fetch(`https://jsonplaceholder.typicode.com/posts/${id}`).then(res => {
-        if (!res.ok) throw new Error('Something went wrong!');
-        return res.json();
-      }),
-    [id]
-  );
 
-  if (isLoading) return <div>Loaaaaaaaaaaaading....</div>;
-  if (isError)
-    return (
-      <div>
-        {error?.message}
-        <Button onClick={refetch}>Retry</Button>
-      </div>
-    );
+const sleep = (ms: number) => new Promise((res, rej) => setTimeout(res, ms));
+
+async function test(name: string): Promise<string> {
+  console.log('start');
+  await sleep(1000);
+  console.log('end');
+  return name;
+}
+export function App() {
+  const { mutate, isLoading, isError, error, reset } = useMutation(
+    (name: string) => test(name)
+  );
 
   return (
     <div
@@ -79,8 +74,10 @@ export function App() {
       }}
     >
       <Heading>Hello, react-hooks-extended!</Heading>
-      <Button onClick={increment}>Fetch next</Button>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <Button disabled={isLoading} onClick={() => mutate('Momen')}>
+        Delete
+      </Button>
+      <Button onClick={reset}>Reset</Button>
     </div>
   );
 }
