@@ -1,11 +1,17 @@
-import { DependencyList, useCallback, useEffect, useRef } from 'react';
+import { DependencyList, useEffect, useRef } from 'react';
 
 import useMapState from '../use-map-state/use-map-state';
 import useRetry from '../use-retry/use-retry';
 
 export interface UseQueryOptions<T, ErrorType> {
+  /**
+   * Enable or disable the query
+   * @default true
+   */
   enabled?: boolean;
+  /** Function to be called with the data after query success */
   onSuccess?(data: T): void;
+  /** Function to be called with the error after query fail */
   onError?(error: ErrorType): void;
 }
 
@@ -14,9 +20,17 @@ export interface UseQuery<T, ErrorType> {
   isError: boolean;
   data: T | null;
   error: ErrorType | null;
+  /** Refetch the query */
   refetch(): void;
 }
 
+/**
+ *  Asynchronously fetch data
+ * @param queryFn - Query function that returns a promise with resolved data
+ * @param deps - List of dependencies that will cause query to rerun if changed
+ * @param options - Query options
+ * @default deps []
+ */
 export function useQuery<T, ErrorType = string>(
   queryFn: () => Promise<T>,
   deps: DependencyList = [],
