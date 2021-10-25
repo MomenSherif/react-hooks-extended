@@ -19,9 +19,27 @@ import { useCounter } from 'react-hooks-extended';
 ## Baisc example
 
 <Tabs groupId="lng">
-  <TabItem value="javascript">
+  <TabItem value="javascript" label="JavaScript">
 
 ```jsx
+function Example() {
+  const { count, increment, decrement, reset } = useCounter();
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
 function Example() {
   const { count, increment, decrement, reset } = useCounter();
 
@@ -54,7 +72,7 @@ function Example() {
 
 ## Return
 
-| Argument      | Type                      | Description                    |
+| Return value      | Type                      | Description                    |
 | :------------ | :------------------------ | :----------------------------- |
 | `count`       | `number`                  | Current count                  |
 | `increment`   | `Function`                | Increment by one step          |

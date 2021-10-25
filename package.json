@@ -5,6 +5,8 @@
   "scripts": {
     "start": "nx serve",
     "docs": "yarn start docs",
+    "deploy": "cd apps/docs && docusaurus deploy",
+    "postdeploy": "rimraf ./apps/docs/build",
     "build": "nx build",
     "test": "nx test"
   },
