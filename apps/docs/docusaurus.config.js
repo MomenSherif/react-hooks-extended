@@ -21,7 +21,7 @@ module.exports = {
       },
       items: [
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/MomenSherif/react-hooks-extended',
           label: 'GitHub',
           position: 'right',
         },
@@ -44,7 +44,7 @@ module.exports = {
           routeBasePath: '/',
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/edit/master/website/',
+            'https://github.com/MomenSherif/react-hooks-extended/tree/master/apps/docs/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
