@@ -1,0 +1,27 @@
+---
+sidebar_label: useCounter
+title: useCounter
+---
+
+```javascript
+import { useCounter } from 'react-hooks-extended';
+
+const { count, increment, decrement, incrementBy, decrementBy, set, reset } =
+  useCounter(0, { min: 0, max: 100 });
+```
+
+```jsx live
+function Playground(props) {
+  const { count, increment, decrement, incrementBy, decrementBy, set, reset } =
+    useCounter(0, { min: 0, max: 100 });
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={() => set(5)}>Set to 5</button>
+      <button onClick={decrement}>Decrement</button>
+    </div>
+  );
+}
+```

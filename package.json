@@ -4,13 +4,19 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
+    "docs": "yarn start docs",
     "build": "nx build",
     "test": "nx test"
   },
   "private": true,
   "dependencies": {
+    "@docusaurus/core": "^2.0.0-alpha.70",
+    "@docusaurus/preset-classic": "^2.0.0-alpha.70",
+    "@docusaurus/theme-live-codeblock": "^2.0.0-beta.8",
     "@emotion/react": "11.1.5",
     "@emotion/styled": "11.1.5",
+    "@mdx-js/react": "^1.6.21",
+    "clsx": "^1.1.1",
     "core-js": "^3.6.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -29,6 +35,7 @@
     "@nrwl/tao": "12.9.0",
     "@nrwl/web": "12.9.0",
     "@nrwl/workspace": "12.9.0",
+    "@nx-plus/docusaurus": "^12.2.0",
     "@testing-library/react": "11.2.6",
     "@testing-library/react-hooks": "7.0.1",
     "@types/jest": "26.0.24",
