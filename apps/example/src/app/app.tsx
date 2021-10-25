@@ -50,34 +50,13 @@ interface Post {
   body: string;
 }
 
-const sleep = (ms: number) => new Promise((res, rej) => setTimeout(res, ms));
-
-async function test(name: string): Promise<string> {
-  console.log('start');
-  await sleep(1000);
-  console.log('end');
-  return name;
-}
 export function App() {
-  const { mutate, isLoading, isError, error, reset } = useMutation(
-    (name: string) => test(name)
-  );
+  const [state, toggle] = useToggle(1, () => Math.floor(Math.random() * 6) + 1);
 
   return (
-    <div
-      css={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        // justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Heading>Hello, react-hooks-extended!</Heading>
-      <Button disabled={isLoading} onClick={() => mutate('Momen')}>
-        Delete
-      </Button>
-      <Button onClick={reset}>Reset</Button>
+    <div>
+      <p>{state}</p>
+      <button onClick={toggle}>Toggle</button>
     </div>
   );
 }

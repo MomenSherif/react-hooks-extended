@@ -1,0 +1,145 @@
+---
+sidebar_label: useToggle
+title: useToggle
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+Toggle between `booleans` or `custom data` easily with useToggle.
+
+## Import
+
+```javascript
+import { useToggle } from 'react-hooks-extended';
+```
+
+## Examples
+
+<details>
+  <summary>
+    Booleans
+  </summary>
+
+  <Tabs groupId="lng">
+  <TabItem value="javascript" label="JavaScript">
+
+```jsx
+function Example() {
+  const [state, toggle] = useToggle();
+
+  return (
+    <div>
+      <p>{String(state)}</p>
+      <button onClick={toggle}>Toggle</button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
+function Example() {
+  const [state, toggle] = useToggle();
+
+  return (
+    <div>
+      <p>{String(state)}</p>
+      <button onClick={toggle}>Toggle</button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+
+</Tabs>
+
+</details>
+
+<details>
+  <summary>
+    Custom data
+  </summary>
+
+  <Tabs groupId="lng">
+  <TabItem value="javascript" label="JavaScript">
+
+```jsx
+function Example() {
+  const [state, toggle] = useToggle('on', v => (v === 'on' ? 'off' : 'on'));
+
+  return (
+    <div>
+      <p>{state}</p>
+      <button onClick={toggle}>Toggle</button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
+function Example() {
+  const [state, toggle] = useToggle<'on' | 'off'>('on', v =>
+    v === 'on' ? 'off' : 'on'
+  );
+
+  return (
+    <div>
+      <p>{state}</p>
+      <button onClick={toggle}>Toggle</button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+
+</Tabs>
+
+</details>
+
+---
+
+## Arguments
+
+| Argument         | Type                  | Description                 | Required | Default value |
+| :--------------- | :-------------------- | :-------------------------- | :------- | :------------ |
+| `initialState`   | `T`                   | Initial state value         | false    | `false`       |
+| `toggleFunction` | `(prevState: T) => T` | Custom toggle functionality | false    | `s => !s`     |
+
+## Return
+
+Array with a stateful value, a function to toggle it and a function to force update the state to certain
+
+| Return value | Type                 | Description                  |
+| :----------- | :------------------- | :--------------------------- |
+| `state`      | `T`                  | Current state                |
+| `toggle`     | `Function`           | Toggle between values        |
+| `setState`   | `(state: T) => void` | Set state to a certain value |
+
+---
+
+## Playground
+
+```jsx live
+
+function Playground() {
+  const [state, toggle] = useToggle(1, () => Math.floor(Math.random() * 6) + 1);
+
+  return (
+    <div>
+      <p>{state}</p>
+      <button onClick={toggle}>Toggle</button>
+    </div>
+  );
+}
+
+```

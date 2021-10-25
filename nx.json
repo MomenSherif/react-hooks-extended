@@ -36,6 +36,9 @@
     },
     "react-hooks-extended": {
       "tags": []
+    },
+    "docs": {
+      "tags": []
     }
   }
 }
