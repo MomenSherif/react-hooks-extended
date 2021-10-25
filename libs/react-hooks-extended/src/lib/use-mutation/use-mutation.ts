@@ -3,18 +3,27 @@ import { useCallback, useRef } from 'react';
 import useMapState from '../use-map-state/use-map-state';
 
 export interface UseMutationOptions<T, E> {
+  /** Function to be called with the data after mutation success */
   onSuccess?(data: T): void;
+  /** Function to be called with the error after mutation fail */
   onError?(data: E): void;
 }
 
 export interface UseMutaion<E, K extends unknown[]> {
+  /** Mutate function to be called to trigger the mutation */
   mutate(...args: K): void;
+  /** Reset internal state */
   reset(): void;
   isLoading: boolean;
   isError: boolean;
   error: E | null;
 }
 
+/**
+ * @param mutationFn - Mutation function that returns a promise
+ * @param options - Mutation options
+ * @returns
+ */
 export function useMutation<T, E, K extends unknown[]>(
   mutationFn: (...args: K) => Promise<T>,
   options: UseMutationOptions<T, E> = {}
