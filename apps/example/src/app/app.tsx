@@ -50,34 +50,19 @@ interface Post {
   body: string;
 }
 
-const sleep = (ms: number) => new Promise((res, rej) => setTimeout(res, ms));
-
-async function test(name: string): Promise<string> {
-  console.log('start');
-  await sleep(1000);
-  console.log('end');
-  return name;
-}
 export function App() {
-  const { mutate, isLoading, isError, error, reset } = useMutation(
-    (name: string) => test(name)
-  );
+  const { count, increment, decrement, incrementBy, decrementBy, reset, set } =
+    useCounter(0, { min: 0, max: 100, step: 2 });
 
   return (
-    <div
-      css={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        // justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Heading>Hello, react-hooks-extended!</Heading>
-      <Button disabled={isLoading} onClick={() => mutate('Momen')}>
-        Delete
-      </Button>
-      <Button onClick={reset}>Reset</Button>
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={() => incrementBy(5)}>Increment by 5</button>
+      <button onClick={() => decrementBy(5)}>Decrement by 5</button>
+      <button onClick={() => set(50)}>Set to 50</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }

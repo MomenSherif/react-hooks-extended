@@ -1,5 +1,5 @@
-const lightCodeTheme = require('prism-react-renderer/themes/dracula');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = require('prism-react-renderer/themes/nightOwl');
+const darkCodeTheme = require('prism-react-renderer/themes/nightOwl');
 
 module.exports = {
   title: 'React Hooks Extended',

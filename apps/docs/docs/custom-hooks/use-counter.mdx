@@ -3,24 +3,85 @@ sidebar_label: useCounter
 title: useCounter
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+Build counter easily with useCounter.
+
+## Import
+
 ```javascript
 import { useCounter } from 'react-hooks-extended';
-
-const { count, increment, decrement, incrementBy, decrementBy, set, reset } =
-  useCounter(0, { min: 0, max: 100 });
 ```
 
-```jsx live
-function Playground(props) {
-  const { count, increment, decrement, incrementBy, decrementBy, set, reset } =
-    useCounter(0, { min: 0, max: 100 });
+## Baisc example
+
+<Tabs groupId="lng">
+  <TabItem value="javascript">
+
+```jsx
+function Example() {
+  const { count, increment, decrement, reset } = useCounter();
 
   return (
     <div>
-      <p>{count}</p>
+      <p>Count: {count}</p>
       <button onClick={increment}>Increment</button>
-      <button onClick={() => set(5)}>Set to 5</button>
       <button onClick={decrement}>Decrement</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+
+</Tabs>
+
+---
+
+## Arguments
+
+| Argument       | Type                       | Description            | Required | Default value             |
+| :------------- | :------------------------- | :--------------------- | :------- | :------------------------ |
+| `initialCount` | `number` or `() => number` | Initial counter value  | false    | `0`                       |
+| `options`      | `UseCounterOptions`        | Counter options        | false    |                           |
+| `options.min`  | `number`                   | Minimum counter values | false    | `Number.MIN_SAFE_INTEGER` |
+| `options.max`  | `number`                   | Maximum counter value  | false    | `Number.MAX_SAFE_INTEGER` |
+| `options.step` | `number`                   | Counter increment step | false    | `1`                       |
+
+## Return
+
+| Argument      | Type                      | Description                    |
+| :------------ | :------------------------ | :----------------------------- |
+| `count`       | `number`                  | Current count                  |
+| `increment`   | `Function`                | Increment by one step          |
+| `decrement`   | `Function`                | Decrement by one step          |
+| `incrementBy` | `(value: number) => void` | Increment with specific number |
+| `decrementBy` | `(value: number) => void` | Decrement with specific number |
+| `set`         | `(value: number) => void` | Set counter to certain value   |
+| `reset`       | `Function`                | Reset counter to initial value |
+
+---
+
+## Playground
+
+```jsx live
+function Playground() {
+  const { count, increment, decrement, incrementBy, decrementBy, reset, set } =
+    useCounter(0, { min: 0, max: 100, step: 2 });
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={() => incrementBy(5)}>Increment by 5</button>
+      <button onClick={() => decrementBy(5)}>Decrement by 5</button>
+      <button onClick={() => set(50)}>Set to 50</button>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }
