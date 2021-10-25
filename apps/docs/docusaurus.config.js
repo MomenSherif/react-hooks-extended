@@ -11,6 +11,7 @@ module.exports = {
   favicon: 'img/favicon.ico',
   organizationName: 'MomenSherif', // Usually your GitHub org/user name.
   projectName: 'react-hooks-extended', // Usually your repo name.
+  trailingSlash: false,
   themeConfig: {
     navbar: {
       title: 'React Hooks Extended',
