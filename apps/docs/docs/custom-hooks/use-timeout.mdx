@@ -1,0 +1,88 @@
+---
+sidebar_label: useTimeout
+title: useTimeout
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+Sets a timer which executes a function the timer expires.
+
+## Import
+
+```javascript
+import { useTimeout } from 'react-hooks-extended';
+```
+
+## Baisc example
+
+<Tabs groupId="lng">
+  <TabItem value="javascript" label="JavaScript">
+
+```jsx
+function Example() {
+  useTimeout(() => {
+    console.log('useTimeout');
+  }, 1000);
+
+  return null;
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
+function Example() {
+  useTimeout(() => {
+    console.log('useTimeout');
+  }, 1000);
+
+  return null;
+}
+```
+
+  </TabItem>
+
+</Tabs>
+
+---
+
+## Arguments
+
+| Argument          | Type                | Description                                                                   | Required | Default value |
+| :---------------- | :------------------ | :---------------------------------------------------------------------------- | :------- | :------------ |
+| `callback`        | `Function`          | A function to be executed after the timer expires                             | true     |               |
+| `delay`           | `number` or `Date`  | The time in 'milliseconds' or 'Date' in the future that the timer should wait | false    | `0`           |
+| `options`         | `UseTimeoutOptions` | Timer options                                                                 | false    |               |
+| `options.enabled` | `boolean`           | Enable or disable the timeout                                                 | false    | `true`        |
+
+---
+
+## Playground
+
+```jsx live
+function Playground() {
+  const [isEnabled, toggleIsEnabled] = useToggle();
+  const [state, setState] = useState('');
+
+  useTimeout(
+    () => {
+      setState('useTimeout');
+    },
+    1000,
+    { enabled: isEnabled }
+  );
+
+  return (
+    <div>
+      <h1>{state}</h1>
+      <button onClick={toggleIsEnabled}>
+        {isEnabled ? 'Disable' : 'Enable'}
+      </button>
+    </div>
+  );
+}
+```
