@@ -1,5 +1,6 @@
 ---
 sidebar_label: useToggle
+sidebar_position: 3
 title: useToggle
 ---
 
@@ -130,7 +131,6 @@ Array with a stateful value, a function to toggle it and a function to force upd
 ## Playground
 
 ```jsx live
-
 function Playground() {
   const [state, toggle] = useToggle(1, () => Math.floor(Math.random() * 6) + 1);
 
@@ -141,5 +141,4 @@ function Playground() {
     </div>
   );
 }
-
 ```

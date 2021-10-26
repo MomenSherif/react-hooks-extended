@@ -51,12 +51,13 @@ interface Post {
 }
 
 export function App() {
-  const [state, toggle] = useToggle(1, () => Math.floor(Math.random() * 6) + 1);
+  const [count, setCount] = useState(0);
+
+  useInterval(() => setCount(c => c + 1), 1000);
 
   return (
     <div>
-      <p>{state}</p>
-      <button onClick={toggle}>Toggle</button>
+      <p>{count}</p>
     </div>
   );
 }

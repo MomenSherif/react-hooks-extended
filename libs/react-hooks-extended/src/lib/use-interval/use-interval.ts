@@ -13,6 +13,7 @@ export interface UseIntervalOptions {
  * @param callback - A function to be executed every delay milliseconds. The first execution happens after delay milliseconds.
  * @param delay - The time, in milliseconds (thousandths of a second), the timer should delay in between executions of the specified function.
  * @param options - Interval options
+ * @default delay 0
  */
 export function useInterval(
   callback: VoidFunction,
