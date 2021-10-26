@@ -1,6 +1,7 @@
 import useCounter from '../use-counter/use-counter';
 
 export interface UseStepperOptions {
+  /** @default 0 */
   initialStep?: number;
 }
 

@@ -16,7 +16,7 @@ module.exports = {
     navbar: {
       title: 'React Hooks Extended',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'React',
         src: 'img/logo.svg',
       },
       items: [

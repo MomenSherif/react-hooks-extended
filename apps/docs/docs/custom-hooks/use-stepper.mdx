@@ -1,0 +1,158 @@
+---
+sidebar_label: useStepper
+title: useStepper
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+Build stepper easily with useStepper.
+
+## Import
+
+```javascript
+import { useStepper } from 'react-hooks-extended';
+```
+
+## Baisc example
+
+<Tabs groupId="lng">
+  <TabItem value="javascript" label="JavaScript">
+
+```jsx
+const todos = [
+  { id: 1, title: 'title 1', body: 'body 1' },
+  { id: 2, title: 'title 2', body: 'body 2' },
+  { id: 3, title: 'title 3', body: 'body 3' },
+  { id: 4, title: 'title 4', body: 'body 4' },
+  { id: 5, title: 'title 5', body: 'body 5' },
+];
+
+export function Example() {
+  const { currentStep, next, prev, canNext, canPrev } = useStepper(todos);
+
+  return (
+    <div>
+      <div>
+        <h2>{currentStep.title}</h2>
+        <p>{currentStep.body}</p>
+      </div>
+      <button disabled={!canPrev} onClick={prev}>
+        Prev
+      </button>
+      <button disabled={!canNext} onClick={next}>
+        Next
+      </button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
+const todos = [
+  { id: 1, title: 'title 1', body: 'body 1' },
+  { id: 2, title: 'title 2', body: 'body 2' },
+  { id: 3, title: 'title 3', body: 'body 3' },
+  { id: 4, title: 'title 4', body: 'body 4' },
+  { id: 5, title: 'title 5', body: 'body 5' },
+];
+
+export function Example() {
+  const { currentStep, next, prev, canNext, canPrev } = useStepper(todos);
+
+  return (
+    <div>
+      <div>
+        <h2>{currentStep.title}</h2>
+        <p>{currentStep.body}</p>
+      </div>
+      <button disabled={!canPrev} onClick={prev}>
+        Prev
+      </button>
+      <button disabled={!canNext} onClick={next}>
+        Next
+      </button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+
+</Tabs>
+
+---
+
+## Arguments
+
+| Argument              | Type                | Description         | Required | Default value |
+| :-------------------- | :------------------ | :------------------ | :------- | :------------ |
+| `steps`               | `T[]`               | Array of steps      | true     |               |
+| `options`             | `UseStepperOptions` | Stepper options     | false    |               |
+| `options.initialStep` | `number`            | Initial active step | false    | 0             |
+
+## Return
+
+| Return value   | Type                     | Description           |
+| :------------- | :----------------------- | :-------------------- |
+| `currentStep`  | `T`                      | Current active step   |
+| `currentIndex` | `number`                 | Current active Index  |
+| `next`         | `Function`               | Go to next step       |
+| `next`         | `Function`               | Go to prev step       |
+| `goto`         | `(step: number) => void` | Go to certain step    |
+| `reset`        | `Function`               | Reset to initial step |
+| `canNext`      | `boolean`                | Has next steps        |
+| `canPrev`      | `boolean`                | Has previous steps    |
+
+---
+
+## Playground
+
+```jsx live
+function Playground() {
+  const {
+    currentStep,
+    currentIndex,
+    next,
+    prev,
+    canNext,
+    canPrev,
+    goto,
+    reset,
+  } = useStepper(
+    [
+      { id: 1, title: 'title 1', body: 'body 1' },
+      { id: 2, title: 'title 2', body: 'body 2' },
+      { id: 3, title: 'title 3', body: 'body 3' },
+      { id: 4, title: 'title 4', body: 'body 4' },
+      { id: 5, title: 'title 5', body: 'body 5' },
+    ],
+    {
+      initialStep: 0,
+    }
+  );
+
+  return (
+    <div>
+      <div>
+        <div>Current index {currentIndex}</div>
+        <h2>{currentStep.title}</h2>
+        <p>{currentStep.body}</p>
+      </div>
+      <button onClick={reset}>Reset</button>
+      <button onClick={() => goto(2)}>go to 3</button>
+      <button disabled={!canPrev} onClick={prev}>
+        Prev
+      </button>
+      <button disabled={!canNext} onClick={next}>
+        Next
+      </button>
+    </div>
+  );
+}
+```
