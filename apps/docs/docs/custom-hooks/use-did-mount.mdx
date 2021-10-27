@@ -1,0 +1,64 @@
+---
+sidebar_label: useDidMount
+sidebar_position: 6
+title: useDidMount
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+Calls a callback on mount
+
+## Import
+
+```javascript
+import { useDidMount } from 'react-hooks-extended';
+```
+
+## Baisc example
+
+<Tabs groupId="lng">
+  <TabItem value="javascript" label="JavaScript">
+
+```jsx
+useDidMount(() => {
+  console.log('useDidMount');
+});
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
+useDidMount(() => {
+  console.log('useDidMount');
+});
+```
+
+  </TabItem>
+
+</Tabs>
+
+---
+
+## Arguments
+
+| Argument   | Type             | Description                                             | Required | Default value |
+| :--------- | :--------------- | :------------------------------------------------------ | :------- | :------------ |
+| `callback` | `EffectCallback` | Imperative function that can return a cleanup function. | true     |               |
+
+---
+
+## Playground
+
+```jsx live
+function Playground() {
+  useDidMount(() => {
+    console.log('useDidMount');
+  });
+
+  return null;
+}
+```
