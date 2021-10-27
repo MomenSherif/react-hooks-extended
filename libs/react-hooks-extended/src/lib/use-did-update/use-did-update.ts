@@ -1,7 +1,7 @@
 import { useEffect, useRef, EffectCallback, DependencyList } from 'react';
 
 /**
- * Call a callback after each update in the dependency list
+ * Calls a callback after each update in the dependency list
  * @param callback - Imperative function that can return a cleanup function
  * @param deps -  If present, effect will only activate if the values in the list change.
  */

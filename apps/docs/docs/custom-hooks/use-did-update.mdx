@@ -1,0 +1,95 @@
+---
+sidebar_label: useDidUpdate
+sidebar_position: 6
+title: useDidUpdate
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+Calls a callback after each update in the dependency list
+
+## Import
+
+```javascript
+import { useDidUpdate } from 'react-hooks-extended';
+```
+
+## Baisc example
+
+<Tabs groupId="lng">
+  <TabItem value="javascript" label="JavaScript">
+
+```jsx
+function Example() {
+  const [count, setCount] = useState(0);
+
+  useDidUpdate(() => {
+    console.log(`Updated count ${count}`);
+  }, [count]);
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={() => setCount(c => c + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
+function Example() {
+  const [count, setCount] = useState(0);
+
+  useDidUpdate(() => {
+    console.log(`Updated count ${count}`);
+  }, [count]);
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={() => setCount(c => c + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+
+</Tabs>
+
+---
+
+## Arguments
+
+| Argument   | Type             | Description                                                             | Required | Default value |
+| :--------- | :--------------- | :---------------------------------------------------------------------- | :------- | :------------ |
+| `callback` | `EffectCallback` | Imperative function that can return a cleanup function.                 | true     |               |
+| `deps`     | `DependencyList` | If present, effect will only activate if the values in the list change. | false    | `undefined`   |
+
+---
+
+## Playground
+
+```jsx live
+function Playground() {
+  const [count, setCount] = useState(0);
+
+  useDidUpdate(() => {
+    // Open console
+    console.log(`Updated count ${count}`);
+  }, [count]);
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={() => setCount(c => c + 1)}>Increment</button>
+    </div>
+  );
+}
+```
