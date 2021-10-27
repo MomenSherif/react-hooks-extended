@@ -1,0 +1,125 @@
+---
+sidebar_label: useDebounceEffect
+sidebar_position: 8
+title: useDebounceEffect
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+Debounce effect callbacks easily with useDebounceEffect.
+
+## Import
+
+```javascript
+import { useDebounceEffect } from 'react-hooks-extended';
+```
+
+## Baisc example
+
+<Tabs groupId="lng">
+  <TabItem value="javascript" label="JavaScript">
+
+```jsx
+function Example() {
+  const [value, setValue] = useState('');
+
+  useDebounceEffect(() => {
+    alert(`value after debounce ${value}`);
+  }, [value]);
+
+  return (
+    <div>
+      <label htmlFor="username">Username</label>
+      <div>
+        <input
+          id="username"
+          type="text"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
+function Example() {
+  const [value, setValue] = useState('');
+
+  useDebounceEffect(() => {
+    alert(`value after debounce ${value}`);
+  }, [value]);
+
+  return (
+    <div>
+      <label htmlFor="username">Username</label>
+      <div>
+        <input
+          id="username"
+          type="text"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+
+</Tabs>
+
+---
+
+## Arguments
+
+| Argument             | Type                       | Description                                                | Required | Default value |
+| :------------------- | :------------------------- | :--------------------------------------------------------- | :------- | :------------ |
+| `callback`           | `Function`                 | Callback effect to debounce                                | true     |               |
+| `deps`               | `DependencyList`           | Effect will only activate if the values in the list change | true     |               |
+| `options`            | `UseDebounceEffectOptions` | Debounce options                                           | false    |               |
+| `options.enabled`    | `boolean`                  | Enable or disable the effect                               | false    | `true`        |
+| `options.runOnMount` | `boolean`                  | Should the debounced callback to run on mount              | false    | `true`        |
+| `options.wait`       | `number`                   | The duration to debounce in milliseconds                   | false    | `1000`        |
+
+---
+
+## Playground
+
+```jsx live
+function Playground() {
+  const [value, setValue] = useState('');
+  const [enabled, toggleEnabled] = useToggle(true);
+
+  useDebounceEffect(
+    () => {
+      alert(`value after debounce ${value}`);
+    },
+    [value],
+    { runOnMount: false, enabled }
+  );
+
+  return (
+    <div>
+      <label htmlFor="username">Username</label>
+      <div>
+        <input
+          id="username"
+          type="text"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+        />
+      </div>
+      <button onClick={toggleEnabled}>{enabled ? 'Disable' : 'Enable'}</button>
+    </div>
+  );
+}
+```
