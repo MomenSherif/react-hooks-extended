@@ -1,0 +1,137 @@
+---
+sidebar_label: usePersistedState
+sidebar_position: 6
+title: usePersistedState
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+Create a persisted state value saved in local storage.
+
+## Import
+
+```javascript
+import { usePersistedState } from 'react-hooks-extended';
+```
+
+## Baisc example
+
+<Tabs groupId="lng">
+  <TabItem value="javascript" label="JavaScript">
+
+```jsx
+function Example() {
+  const [state, setState] = usePersistedState('username', '');
+  return (
+    <div>
+      <label htmlFor="username">username</label>
+      <div>
+        <input
+          id="username"
+          type="text"
+          value={state}
+          onChange={e => setState(e.target.value)}
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
+function Example() {
+  const [state, setState] = usePersistedState('username', '');
+  return (
+    <div>
+      <label htmlFor="username">username</label>
+      <div>
+        <input
+          id="username"
+          type="text"
+          value={state}
+          onChange={e => setState(e.target.value)}
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+
+</Tabs>
+
+---
+
+## Arguments
+
+| Argument       | Type             | Description             | Required | Default value |
+| :------------- | :--------------- | :---------------------- | :------- | :------------ |
+| `key`          | `string`         | Local storage item key. | true     |               |
+| `initialState` | `S` or `() => S` | Local storage item key. | true     |               |
+
+## Return
+
+Array with a stateful value, a function to update it. and a function to remove the item from local storage.
+
+| Return value | Type                                          | Description                        |
+| :----------- | :-------------------------------------------- | :--------------------------------- |
+| `state`      | `S`                                           | Current state                      |
+| `setState`   | `(state: S) => void` or `(prevState: S) => S` | State setter                       |
+| `remove`     | `Function`                                    | Remove the item from local storage |
+
+---
+
+## Playground
+
+```jsx live
+function Playground() {
+  const [value, setValue] = useState('');
+  const [todos, setTodos, remove] = usePersistedState('todos', []);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!value) return;
+    setTodos(t => [...t, value]);
+    setValue('');
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="todo">Todo</label>
+        <div>
+          <input
+            id="todo"
+            type="text"
+            value={value}
+            onChange={e => setValue(e.target.value)}
+          />
+        </div>
+        <button type="submit">Add Todo</button>
+      </form>
+      <ul>
+        {todos.map((todo, idx) => (
+          <li key={idx}>
+            <span>{todo}</span>{' '}
+            <button
+              onClick={() => {
+                setTodos(t => t.filter((_, i) => i !== idx));
+              }}
+            >
+              X
+            </button>
+          </li>
+        ))}
+      </ul>
+      <button onClick={remove}>Remove from localStorage</button>
+    </div>
+  );
+}
+```
