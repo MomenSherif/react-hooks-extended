@@ -1,9 +1,9 @@
-export type Callback<T> = () => T | void;
+export type Callback<T> = () => T;
 
 export default function tryCatch<T>(
   callbackFn: Callback<T>,
   fallbackFn: Callback<T>
-): T | void {
+): T {
   try {
     return callbackFn();
   } catch (error) {

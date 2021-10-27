@@ -20,17 +20,17 @@ export type UsePersistedState<T> = [
  */
 export function usePersistedState<S>(
   key: string,
-  initialState?: S
+  initialState?: S | (() => S)
 ): UsePersistedState<S> {
-  const [state, setState] = useState<S>(() => {
+  const [state, setState] = useState(() => {
     const persistedState = localStorage.getItem(key);
 
     if (!persistedState)
-      return typeof initialState === 'function' ? initialState() : initialState;
+      return initialState instanceof Function ? initialState() : initialState;
 
-    return tryCatch<S>(
+    return tryCatch<S | undefined>(
       () => JSON.parse(persistedState),
-      () => (typeof initialState === 'function' ? initialState() : initialState)
+      () => (initialState instanceof Function ? initialState() : initialState)
     );
   });
 
