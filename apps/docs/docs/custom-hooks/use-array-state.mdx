@@ -1,0 +1,293 @@
+---
+sidebar_label: useArrayState
+sidebar_position: 11
+title: useArrayState
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+Manage state in array format easier with useArrayState.
+
+## Import
+
+```javascript
+import { useArrayState } from 'react-hooks-extended';
+```
+
+## Baisc example
+
+<Tabs groupId="lng">
+  <TabItem value="javascript" label="JavaScript">
+
+```jsx
+function Example() {
+  const [value, setValue] = useState('');
+  const [todos, { push, unshift, pop, shift, remove, removeAll, update }] =
+    useArrayState([]);
+
+  const todoIDsToDelete = useMemo(
+    () => new Set(todos.filter(t => t.checked).map(t => t.id)),
+    [todos]
+  );
+
+  return (
+    <div>
+      <h1>Todos</h1>
+      <button
+        onClick={() => remove(todo => todoIDsToDelete.has(todo.id))}
+        disabled={!todoIDsToDelete.size}
+      >
+        Delete {todoIDsToDelete.size || '...'}
+      </button>
+      <button onClick={removeAll} disabled={!todos.length}>
+        Delete All
+      </button>
+      <ul>
+        {todos.map(({ id, text, checked }) => (
+          <li key={id}>
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={e =>
+                update(
+                  t => t.id === id,
+                  prevState => ({ ...prevState, checked: e.target.checked })
+                )
+              }
+            />
+            <span>{text}</span> <button onClick={() => remove(t => t.id === id)}>X</button>
+          </li>
+        ))}
+      </ul>
+      <div>
+        <input
+          type="text"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+        />
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            if (!value) return;
+            unshift({ id: Date.now(), text: value, checked: false });
+            setValue('');
+          }}
+        >
+          Unshift
+        </button>
+        <button
+          onClick={() => {
+            if (!value) return;
+            push({ id: Date.now(), text: value, checked: false });
+            setValue('');
+          }}
+        >
+          Push
+        </button>
+      </div>
+      <div>
+        <button onClick={shift}>Shift</button>
+        <button onClick={pop}>Pop</button>
+      </div>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
+interface Todo {
+  id: number;
+  text: string;
+  checked: boolean;
+}
+
+function Example() {
+  const [value, setValue] = useState('');
+  const [todos, { push, unshift, pop, shift, remove, removeAll, update }] =
+    useArrayState<Todo>([]);
+
+  const todoIDsToDelete = useMemo(
+    () => new Set(todos.filter(t => t.checked).map(t => t.id)),
+    [todos]
+  );
+
+  return (
+    <div>
+      <h1>Todos</h1>
+      <button
+        onClick={() => remove(todo => todoIDsToDelete.has(todo.id))}
+        disabled={!todoIDsToDelete.size}
+      >
+        Delete {todoIDsToDelete.size || '...'}
+      </button>
+      <button onClick={removeAll} disabled={!todos.length}>
+        Delete All
+      </button>
+      <ul>
+        {todos.map(({ id, text, checked }) => (
+          <li key={id}>
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={e =>
+                update(
+                  t => t.id === id,
+                  prevState => ({ ...prevState, checked: e.target.checked })
+                )
+              }
+            />
+            <span>{text}</span> <button onClick={() => remove(t => t.id === id)}>X</button>
+          </li>
+        ))}
+      </ul>
+      <div>
+        <input
+          type="text"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+        />
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            if (!value) return;
+            unshift({ id: Date.now(), text: value, checked: false });
+            setValue('');
+          }}
+        >
+          Unshift
+        </button>
+        <button
+          onClick={() => {
+            if (!value) return;
+            push({ id: Date.now(), text: value, checked: false });
+            setValue('');
+          }}
+        >
+          Push
+        </button>
+      </div>
+      <div>
+        <button onClick={shift}>Shift</button>
+        <button onClick={pop}>Pop</button>
+      </div>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+
+</Tabs>
+
+---
+
+## Arguments
+
+| Argument       | Type                 | Description         | Required | Default value |
+| :------------- | :------------------- | :------------------ | :------- | :------------ |
+| `initialState` | `S[]` or `() => S[]` | Initial state value | true     |               |
+
+## Return
+
+Array with a stateful value and methods to update the array.
+
+| Return value        | Type                                                                                                              | Description                                                                   |
+| :------------------ | :---------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------- |
+| `state`             | `S[]`                                                                                                             | Current state                                                                 |
+| `methods`           | `object`                                                                                                          | Helper methods to update array state                                          |
+| `methods.set`       | `(value: S`\|`(prevState: S) => S) => void`                                                                       | Set new array state                                                           |
+| `methods.push`      | `(...value: S[]) => void`                                                                                         | Adds one or more elements to the end of an array                              |
+| `methods.unshift`   | `(...value: S[]) => void`                                                                                         | Adds one or more elements to the beginning of an array                        |
+| `methods.pop`       | `Function`                                                                                                        | Removes the last element from an array                                        |
+| `methods.shift`     | `Function`                                                                                                        | Removes the first element from an array                                       |
+| `methods.remove`    | `(predicate: (value: S, index: number, array: S[]) => boolean) => void`                                           | Removes all elements that pass the test implemented by the predicate function |
+| `methods.removeAll` | `Function`                                                                                                        | Removes all array elements                                                    |
+| `methods.update`    | `(predicate: (value: S, index: number, array: S[]) => boolean, updater: (prevValue: S, index: number) => S) void` | Update all elements that pass the test implemented by the predicate function. |
+
+---
+
+## Playground
+
+```jsx live
+function Playground() {
+  const [value, setValue] = useState('');
+  const [todos, { push, unshift, pop, shift, remove, removeAll, update }] =
+    useArrayState([]);
+
+  const todoIDsToDelete = useMemo(
+    () => new Set(todos.filter(t => t.checked).map(t => t.id)),
+    [todos]
+  );
+
+  return (
+    <div>
+      <h1>Todos</h1>
+      <button
+        onClick={() => remove(todo => todoIDsToDelete.has(todo.id))}
+        disabled={!todoIDsToDelete.size}
+      >
+        Delete {todoIDsToDelete.size || '...'}
+      </button>
+      <button onClick={removeAll} disabled={!todos.length}>
+        Delete All
+      </button>
+      <ul>
+        {todos.map(({ id, text, checked }) => (
+          <li key={id}>
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={e =>
+                update(
+                  t => t.id === id,
+                  prevState => ({ ...prevState, checked: e.target.checked })
+                )
+              }
+            />
+            <span>{text}</span> <button onClick={() => remove(t => t.id === id)}>X</button>
+          </li>
+        ))}
+      </ul>
+      <div>
+        <input
+          type="text"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+        />
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            if (!value) return;
+            unshift({ id: Date.now(), text: value, checked: false });
+            setValue('');
+          }}
+        >
+          Unshift
+        </button>
+        <button
+          onClick={() => {
+            if (!value) return;
+            push({ id: Date.now(), text: value, checked: false });
+            setValue('');
+          }}
+        >
+          Push
+        </button>
+      </div>
+      <div>
+        <button onClick={shift}>Shift</button>
+        <button onClick={pop}>Pop</button>
+      </div>
+    </div>
+  );
+}
+```
