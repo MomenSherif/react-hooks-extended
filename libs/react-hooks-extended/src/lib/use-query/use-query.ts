@@ -31,7 +31,7 @@ export interface UseQuery<T, ErrorType> {
  * @param options - Query options
  * @default deps []
  */
-export function useQuery<T, ErrorType = string>(
+export function useQuery<T, ErrorType = unknown>(
   queryFn: () => Promise<T>,
   deps: DependencyList = [],
   options: UseQueryOptions<T, ErrorType> = {}
@@ -44,7 +44,7 @@ export function useQuery<T, ErrorType = string>(
     data: T | null;
     error: ErrorType | null;
   }>({
-    isLoading: true,
+    isLoading: enabled,
     isError: false,
     data: null,
     error: null,
