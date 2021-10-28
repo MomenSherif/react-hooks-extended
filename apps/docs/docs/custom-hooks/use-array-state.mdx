@@ -25,40 +25,16 @@ import { useArrayState } from 'react-hooks-extended';
 ```jsx
 function Example() {
   const [value, setValue] = useState('');
-  const [todos, { push, unshift, pop, shift, remove, removeAll, update }] =
-    useArrayState([]);
-
-  const todoIDsToDelete = useMemo(
-    () => new Set(todos.filter(t => t.checked).map(t => t.id)),
-    [todos]
-  );
+  const [todos, { push, unshift, pop, shift, remove }] = useArrayState([]);
 
   return (
     <div>
       <h1>Todos</h1>
-      <button
-        onClick={() => remove(todo => todoIDsToDelete.has(todo.id))}
-        disabled={!todoIDsToDelete.size}
-      >
-        Delete {todoIDsToDelete.size || '...'}
-      </button>
-      <button onClick={removeAll} disabled={!todos.length}>
-        Delete All
-      </button>
       <ul>
-        {todos.map(({ id, text, checked }) => (
+        {todos.map(({ id, text }) => (
           <li key={id}>
-            <input
-              type="checkbox"
-              checked={checked}
-              onChange={e =>
-                update(
-                  t => t.id === id,
-                  prevState => ({ ...prevState, checked: e.target.checked })
-                )
-              }
-            />
-            <span>{text}</span> <button onClick={() => remove(t => t.id === id)}>X</button>
+            <span>{text}</span>{' '}
+            <button onClick={() => remove(t => t.id === id)}>X</button>
           </li>
         ))}
       </ul>
@@ -73,7 +49,7 @@ function Example() {
         <button
           onClick={() => {
             if (!value) return;
-            unshift({ id: Date.now(), text: value, checked: false });
+            unshift({ id: Date.now(), text: value });
             setValue('');
           }}
         >
@@ -82,7 +58,7 @@ function Example() {
         <button
           onClick={() => {
             if (!value) return;
-            push({ id: Date.now(), text: value, checked: false });
+            push({ id: Date.now(), text: value });
             setValue('');
           }}
         >
@@ -105,45 +81,22 @@ function Example() {
 interface Todo {
   id: number;
   text: string;
-  checked: boolean;
 }
 
 function Example() {
   const [value, setValue] = useState('');
-  const [todos, { push, unshift, pop, shift, remove, removeAll, update }] =
-    useArrayState<Todo>([]);
-
-  const todoIDsToDelete = useMemo(
-    () => new Set(todos.filter(t => t.checked).map(t => t.id)),
-    [todos]
+  const [todos, { push, unshift, pop, shift, remove }] = useArrayState<Todo>(
+    []
   );
 
   return (
     <div>
       <h1>Todos</h1>
-      <button
-        onClick={() => remove(todo => todoIDsToDelete.has(todo.id))}
-        disabled={!todoIDsToDelete.size}
-      >
-        Delete {todoIDsToDelete.size || '...'}
-      </button>
-      <button onClick={removeAll} disabled={!todos.length}>
-        Delete All
-      </button>
       <ul>
-        {todos.map(({ id, text, checked }) => (
+        {todos.map(({ id, text }) => (
           <li key={id}>
-            <input
-              type="checkbox"
-              checked={checked}
-              onChange={e =>
-                update(
-                  t => t.id === id,
-                  prevState => ({ ...prevState, checked: e.target.checked })
-                )
-              }
-            />
-            <span>{text}</span> <button onClick={() => remove(t => t.id === id)}>X</button>
+            <span>{text}</span>{' '}
+            <button onClick={() => remove(t => t.id === id)}>X</button>
           </li>
         ))}
       </ul>
@@ -158,7 +111,7 @@ function Example() {
         <button
           onClick={() => {
             if (!value) return;
-            unshift({ id: Date.now(), text: value, checked: false });
+            unshift({ id: Date.now(), text: value });
             setValue('');
           }}
         >
@@ -167,7 +120,7 @@ function Example() {
         <button
           onClick={() => {
             if (!value) return;
-            push({ id: Date.now(), text: value, checked: false });
+            push({ id: Date.now(), text: value });
             setValue('');
           }}
         >
