@@ -4,7 +4,7 @@ export interface UseMapStateUpdaters<S> {
   /**
    * Set a key value pair in map
    * @param key - Key
-   * @param value - New value OR a function with value and returns new value
+   * @param value - New value OR a function with prev value and returns new value
    */
   set<K extends keyof S>(key: K, value: SetStateAction<S[K]>): void;
   /** Remove a key value pair in map */

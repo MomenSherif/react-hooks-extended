@@ -1,0 +1,157 @@
+---
+sidebar_label: useMapState
+sidebar_position: 10
+title: useMapState
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+Manage state in a key value pair map easier with useMapState.
+
+## Import
+
+```javascript
+import { useMapState } from 'react-hooks-extended';
+```
+
+## Baisc example
+
+<Tabs groupId="lng">
+  <TabItem value="javascript" label="JavaScript">
+
+```jsx
+function Example() {
+  const [state, { set, setMultiple, remove }] = useMapState({
+    loading: true,
+    data: null,
+    error: null,
+  });
+
+  return (
+    <div>
+      <pre>{JSON.stringify(state, null, 2)}</pre>
+      <button onClick={() => set('loading', true)}>Loading | true</button>
+      <button onClick={() => set('loading', false)}>Loading | false</button>
+      <button onClick={() => set('loading', s => !s)}>Loading | toggle</button>
+      <button
+        onClick={() =>
+          setMultiple({
+            loading: false,
+            data: [1, 2, 3],
+          })
+        }
+      >
+        Set data & loading
+      </button>
+      <button onClick={() => remove('data')}>Remove data</button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
+function Example() {
+  const [state, { set, setMultiple, remove }] = useMapState<{
+    loading: boolean;
+    data: number[] | null;
+    error: string | null;
+  }>({
+    loading: true,
+    data: null,
+    error: null,
+  });
+
+  return (
+    <div>
+      <pre>{JSON.stringify(state, null, 2)}</pre>
+      <button onClick={() => set('loading', true)}>Loading | true</button>
+      <button onClick={() => set('loading', false)}>Loading | false</button>
+      <button onClick={() => set('loading', s => !s)}>Loading | toggle</button>
+      <button
+        onClick={() =>
+          setMultiple({
+            loading: false,
+            data: [1, 2, 3],
+          })
+        }
+      >
+        Set data & loading
+      </button>
+      <button onClick={() => remove('data')}>Remove data</button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+
+</Tabs>
+
+---
+
+## Arguments
+
+| Argument       | Type             | Description         | Required | Default value |
+| :------------- | :--------------- | :------------------ | :------- | :------------ |
+| `initialState` | `S` or `() => S` | Initial state value | true     |               |
+
+## Return
+
+Array with a stateful value and methods to update the map.
+
+| Return value             | Type                                                          | Description                           |
+| :----------------------- | :------------------------------------------------------------ | :------------------------------------ |
+| `state`                  | `S extends object`                                            | Current state                         |
+| `methods`                | `object`                                                      | Helper methods to update map state    |
+| `methods.set`            | ` (key: keyof S, value: S`\|`(prevState: S) => S) => void `   | Set a key value pair in map           |
+| `methods.remove`         | `(key: keyof S) => void`                                      | Remove a key value pair in map        |
+| `methods.has`            | `(key: keyof S) => boolean`                                   | If key exists in map                  |
+| `methods.setMultiple`    | `(value: Partial<S>`\|`(prevState: S) => Partial<S>) => void` | set multiple key value pair in map    |
+| `methods.removeMultiple` | `(...keys: (keyof S)[]) => void`                              | Remove multiple key value pair in map |
+| `methods.removeAll`      | `Function`                                                    | Remove all key value pair in map      |
+
+---
+
+## Playground
+
+```jsx live
+function Playground() {
+  const [state, { set, setMultiple, remove, removeMultiple, removeAll, has }] =
+    useMapState({
+      loading: true,
+      data: null,
+      error: null,
+    });
+
+  return (
+    <div>
+      <pre>{JSON.stringify(state, null, 2)}</pre>
+      <p>has loading: {String(has('loading'))}</p>
+      <button onClick={() => set('loading', true)}>Loading | true</button>
+      <button onClick={() => set('loading', false)}>Loading | false</button>
+      <button onClick={() => set('loading', s => !s)}>Loading | toggle</button>
+      <button
+        onClick={() =>
+          setMultiple({
+            loading: false,
+            data: [1, 2, 3],
+          })
+        }
+      >
+        Set data & loading
+      </button>
+      <button onClick={() => remove('data')}>Remove data</button>
+      <button onClick={removeAll}>Remove all</button>
+      <button onClick={() => removeMultiple('loading', 'error')}>
+        Remove loading & error
+      </button>
+    </div>
+  );
+}
+```
