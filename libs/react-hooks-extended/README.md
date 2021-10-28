@@ -1,14 +1,12 @@
-# React Hooks Extended 📦
+# React Hooks Extended 📦 [Docs](https://momensherif.github.io/react-hooks-extended/)
 
 - `Don't use in production, you can copy paste any hook into your code.`
-- `Try new tools & write more TS`
+- `made only to try new tools & write more TS`
   - [React](https://reactjs.org/)
   - [TypeScript](https://www.typescriptlang.org/) ❤
   - [Nx](https://nx.dev/) `Monorepo tool`
   - [Docusaurus](https://docusaurus.io/) `Easy to create Docs ❤`
   - [Mdx](https://mdxjs.com/) 😲
-
-``
 
 ## Installation
 
@@ -35,6 +33,20 @@ function Example() {
     </div>
   );
 }
+```
+
+## Clone ?
+
+Run playground server on port: 3000
+
+```shell
+yarn start
+```
+
+Run documentation server on port: 3001
+
+```shell
+yarn docs
 ```
 
 ##[All Hooks are documented Here!](https://momensherif.github.io/react-hooks-extended/)
