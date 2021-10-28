@@ -17,47 +17,26 @@ import {
   useMutation,
 } from 'react-hooks-extended';
 
-const Heading = styled.h1({ fontSize: 50, textAlign: 'center' });
-const Button = styled.button({
-  display: 'inline-block',
-  border: 'none',
-  backgroundColor: 'crimson',
-  color: 'white',
-  padding: '15px 20px',
-  marginBottom: 10,
-  fontSize: 20,
-  borderRadius: 10,
-  cursor: 'pointer',
-  transition: 'transform 80ms ease-in-out, background-color 0.2s ease-in-out',
-
-  ':not(:disabled):hover': {
-    backgroundColor: '#ff0a38',
-  },
-
-  ':active': {
-    transform: 'translateY(2px)',
-  },
-
-  ':disabled': {
-    opacity: 0.8,
-    cursor: 'not-allowed',
-  },
-});
-interface Post {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
-
 export function App() {
-  const [count, setCount] = useState(0);
-
-  useInterval(() => setCount(c => c + 1), 1000);
+  const { count, increment, decrement } = useCounter();
 
   return (
     <div>
-      <p>{count}</p>
+      <h1 css={{ fontSize: 50, textAlign: 'center' }}>
+        React Hooks Extended | Playground
+      </h1>
+      <div
+        css={{
+          marginTop: 100,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <button onClick={decrement}>Decrement</button>
+        <span css={{ marginInline: 20 }}>{count}</span>
+        <button onClick={increment}>Increment</button>
+      </div>
     </div>
   );
 }
