@@ -1,0 +1,139 @@
+---
+sidebar_label: useMutation
+sidebar_position: 13
+title: useMutation
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## About
+
+Mutate data with loading & error states indicators easier with useMutation.
+
+## Import
+
+```javascript
+import { useMutation } from 'react-hooks-extended';
+```
+
+## Baisc example
+
+<Tabs groupId="lng">
+  <TabItem value="javascript" label="JavaScript">
+
+```jsx
+function Example() {
+  const { mutate, isLoading, isError, error } = useMutation(
+    // Any mutation action that returns a promise
+    // Just a dummy example for showing success & error randomly
+    name =>
+      new Promise((res, rej) => {
+        setTimeout(
+          () => (Math.random() > 0.5 ? res(name) : rej(new Error('Oops!'))),
+          1000
+        );
+      }),
+    {
+      onSuccess: data => console.log(`onSuccess ${data}`),
+      onError: error => console.log(`onError ${error}`),
+    }
+  );
+
+  return (
+    <div>
+      <button onClick={() => mutate('useMutation')} disabled={isLoading}>
+        Delete {isLoading && '...'} {!isLoading && isError && error?.message}
+      </button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```tsx
+function Example() {
+  const { mutate, isLoading, isError, error } = useMutation(
+    // Any mutation action that returns a promise
+    // Just a dummy example for showing success & error randomly
+    (name: string) =>
+      new Promise((res, rej) => {
+        setTimeout(
+          () => (Math.random() > 0.5 ? res(name) : rej(new Error('Oops!'))),
+          1000
+        );
+      }),
+    {
+      onSuccess: data => console.log(`onSuccess ${data}`),
+      onError: (error: Error) => console.log(`onError ${error}`),
+    }
+  );
+
+  return (
+    <div>
+      <button onClick={() => mutate('useMutation')} disabled={isLoading}>
+        Delete {isLoading && '...'} {!isLoading && isError && error?.message}
+      </button>
+    </div>
+  );
+}
+```
+
+  </TabItem>
+
+</Tabs>
+
+---
+
+## Arguments
+
+| Argument            | Type                            | Description                                                | Required | Default value |
+| :------------------ | :------------------------------ | :--------------------------------------------------------- | :------- | :------------ |
+| `mutationFn`        | `(... args: K[]) => Promise<T>` | Mutation function that returns a promise                   | true     |               |
+| `options`           | `UseMutationOptions`            | Mutation options                                           | false    |               |
+| `options.onSuccess` | `(data: T) => void`             | Function to be called with the data after mutation success | false    | `undefined`   |
+| `options.onError`   | `(error: E) => void`            | Function to be called with the error after mutation fail   | false    | `undefined`   |
+
+## Return
+
+| Return value | Type                     | Description                                          |
+| :----------- | :----------------------- | :--------------------------------------------------- |
+| `mutate`     | `(...args: K[]) => void` | Mutate function to be called to trigger the mutation |
+| `reset`      | `Function`               | Reset internal state                                 |
+| `isLoading`  | `boolean`                | Is mutating                                          |
+| `isError`    | `boolean`                | Is mutation failed                                   |
+| `error`      | `E` or `null`            | Error state catched from mutation function           |
+
+---
+
+## Playground
+
+```jsx live
+function Playground() {
+  const { mutate, isLoading, isError, error } = useMutation(
+    // Any mutation action that returns a promise
+    // Just a dummy example for showing success & error randomly
+    name =>
+      new Promise((res, rej) => {
+        setTimeout(
+          () => (Math.random() > 0.5 ? res(name) : rej(new Error('Oops!'))),
+          1000
+        );
+      }),
+    {
+      onSuccess: data => console.log(`onSuccess ${data}`),
+      onError: error => console.log(`onError ${error}`),
+    }
+  );
+
+  return (
+    <div>
+      <button onClick={() => mutate('useMutation')} disabled={isLoading}>
+        Delete {isLoading && '...'} {!isLoading && isError && error.message}
+      </button>
+    </div>
+  );
+}
+```

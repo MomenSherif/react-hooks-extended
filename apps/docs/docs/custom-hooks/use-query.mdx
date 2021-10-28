@@ -90,20 +90,20 @@ function Example() {
 | :------------------ | :------------------- | :------------------------------------------------------------- | :------- | :------------ |
 | `queryFn`           | `() => Promise<T>`   | Query function that returns a promise with resolved data       | true     |               |
 | `deps`              | `DependencyList`     | List of dependencies that will cause query to rerun if changed | false    | `[]`          |
-| `options`           | `Query options`      | List of dependencies that will cause query to rerun if changed | false    |               |
+| `options`           | `UseQueryOptions`    | Query options                                                  | false    |               |
 | `options.enabled`   | `boolean`            | Enable or disable the query                                    | false    | `true`        |
 | `options.onSuccess` | `(data: T) => void`  | Function to be called with the data after query success        | false    | `undefined`   |
 | `options.onError`   | `(error: E) => void` | Function to be called with the error after query fail          | false    | `undefined`   |
 
 ## Return
 
-| Return value | Type       | Description                             |
-| :----------- | :--------- | :-------------------------------------- |
-| `data`       | `T`        | Resolved data from query function       |
-| `error`      | `E`        | Error state catched from query function |
-| `isLoading`  | `boolean`  | Is query running                        |
-| `isError`    | `boolean`  | Is query failed                         |
-| `refetch`    | `Function` | Retry query function                    |
+| Return value | Type          | Description                             |
+| :----------- | :------------ | :-------------------------------------- |
+| `data`       | `T` or `null` | Resolved data from query function       |
+| `error`      | `E` or `null` | Error state catched from query function |
+| `isLoading`  | `boolean`     | Is query running                        |
+| `isError`    | `boolean`     | Is query failed                         |
+| `refetch`    | `Function`    | Retry query function                    |
 
 ---
 

@@ -20,11 +20,12 @@ export interface UseMutaion<E, K extends unknown[]> {
 }
 
 /**
+ * Mutate data with loading & error states indicators.
  * @param mutationFn - Mutation function that returns a promise
  * @param options - Mutation options
  * @returns
  */
-export function useMutation<T, E, K extends unknown[]>(
+export function useMutation<T, E = unknown, K extends unknown[] = []>(
   mutationFn: (...args: K) => Promise<T>,
   options: UseMutationOptions<T, E> = {}
 ): UseMutaion<E, K> {
@@ -56,7 +57,7 @@ export function useMutation<T, E, K extends unknown[]>(
       mutationFnRef
         .current(...args)
         .then(data => {
-          set('isLoading', false);
+          setMultiple({ isLoading: false, isError: false, error: null });
           onSuccessRef.current?.(data);
         })
         .catch((error: E) => {
